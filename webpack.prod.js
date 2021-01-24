@@ -6,6 +6,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
+const CompressionPlugin = require('compression-webpack-plugin');
+
+
 
 module.exports = merge(common, {
   mode: 'production',
@@ -56,7 +59,9 @@ module.exports = merge(common, {
         preset: ['default', {discardComments: {removeAll: true}}]
       },
       canPrint: true
-    })
+    }),
+
+    new CompressionPlugin()
 
   ],
   optimization: {

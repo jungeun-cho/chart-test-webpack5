@@ -151,28 +151,21 @@ const columnChart = new ColumnChart({
   options: {
     useStatistics: false,
     chart: {
-      width: 10000,
-      height: 500,
-      animation: false
+      width: 30000,
+      height: 500
     },
     xAxis: {
-      label: {interval: 100},
+      label: {interval: 7},
       tick: {interval: 1000}
     },
     legend: {
-      visible: true,
-      align: 'bottom'
-    },
-    responsive: {
-      animation: {duration: 0}
+      visible: false
     },
     theme: {
       // chart: {backgroundColor: 'rgba(255, 0, 0, 0.1)'},
-      /*
       series: {
         barWidth: 2
       }
-      */
     }
   }
 });
