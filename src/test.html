@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>resize test</title>
+</head>
+<body>
+  <div id="log-container" style="min-width: 400px;min-height: 300px;width: 70vw;height: 70vh; border:2px solid #ff0000;"></div>
+  <script>
+    const log = document.getElementById('log-container');
+
+    function logTime(event) {
+
+      log.className = '';
+      log.innerHTML = createEntry(new Date());
+      console.log('로그탄다음에!', resizeDebounceTimeout)
+
+      resizeDebounceTimeout = null;
+    }
+
+    /**
+     * Creates the very string of the log.
+    */
+    function createEntry(date) {
+      return pad(date.getUTCHours())
+        + ':' + pad(date.getUTCMinutes()) + ':' + pad(date.getUTCSeconds())
+        + '.' + pad(Math.floor(date.getUTCMilliseconds() / 10)) + '</b>';
+    }
+
+    /**
+     * Makes sure that a given number contains a leading zero if necessary.
+    */
+    function pad(number) {
+      return (( number < 10 ) ? '0' : '') + number;
+    }
+
+
+    const getCurrentOrientation = () => Math.abs(0) % 180;
+    let initialOrientation = getCurrentOrientation()
+
+    let currentOrientation = null
+    let resizeDebounceTimeout = null
+
+
+    const debounce = () => {
+      currentOrientation = getCurrentOrientation();
+
+      if (currentOrientation !== initialOrientation) {
+        console.log('1번');
+        logTime();
+        initialOrientation = currentOrientation;
+      } else {
+        console.log('2번');
+        clearTimeout(resizeDebounceTimeout);
+        resizeDebounceTimeout = window.setTimeout(logTime, 100);
+      }
+    };
+
+    window.addEventListener('resize', debounce);
+
+    log.addEventListener('mousemove', (e) => {
+      if (resizeDebounceTimeout !== null) {
+        return;
+      }
+
+      console.log('mouse move!!!!!')
+    });
+  </script>
+</body>
+</html>
